@@ -1,0 +1,6 @@
+---
+
+- git: repo=https://github.com/broadgsa/gatk-protected.git dest=gatk-protected version=3.4
+
+- command: chdir=gatk-protected mvn clean install
+  #chdir: gatk-protected

@@ -1,0 +1,23 @@
+---
+- get_url: url={{ maven_url }} dest=/tmp/maven.tgz
+
+- get_url: url={{ maven_url }}.md5 dest=/tmp/maven.md5
+
+- command: echo " "{{ maven_url }} >> /tmp/maven.md5 && md5sum -c /tmp/maven.md5
+
+- file: path={{ biopet_dir }} state=directory
+  become: true
+
+- unarchive: >
+    copy=no
+    src=/tmp/maven.tgz
+    dest={{ biopet_dir }}
+  become: true
+
+- file: path=/tmp/maven.tgz state=absent
+
+- file: path=/tmp/maven.md5 state=absent
+
+- file: src={{ maven_dir }}/bin/mvn dest=/usr/local/bin/mvn owner=root group=root state=link
+  become: true
+
