@@ -1,0 +1,20 @@
+---
+
+- git: repo=https://git.lumc.nl/biopet/biopet.git
+       dest={{ biopet_dir }}/src/biopet
+       version=develop
+       force=yes
+  register: biopet_checkout
+  become: true
+
+- command: chdir={{ biopet_dir }}/src/biopet
+           mvn -DskipTests=true clean install
+  when: biopet_checkout.before != biopet_checkout.after
+  become: true
+
+- file: path={{ biopet_dir }}/programs/biopet/ state=directory
+  become: true
+
+- copy: src={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/Biopet-?.?.?*.jar dest={{ biopet_dir }}/programs/biopet/ owner=root group=root mode=755
+  become: true
+

@@ -1,6 +1,13 @@
 ---
 
-- git: repo=https://github.com/broadgsa/gatk-protected.git dest=gatk-protected version=3.4
+- git: repo=https://github.com/broadgsa/gatk-protected.git
+       dest={{ biopet_dir }}/src/gatk-protected
+       version=3.5
+       force=yes
+  register: gatk_checkout
+  become: true
 
-- command: chdir=gatk-protected mvn clean install
-  #chdir: gatk-protected
+- command: chdir={{ biopet_dir }}/src/gatk-protected
+           mvn clean install
+  when: gatk_checkout.before != gatk_checkout.after
+  become: true
