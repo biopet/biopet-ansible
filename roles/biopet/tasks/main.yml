@@ -18,10 +18,10 @@
 - find: paths={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/ patterns="Biopet-?.?.?*.jar"
   register: find_jar
 
-- file: path={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }}
+- file: path={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }} state=absent
   register: biopet_jar
 
-- command: cp {{ find_jar.files[0].path }} {{ biopet_jar.path }} creates={{ biopet_jar.path }}
+- command: cp {{ find_jar.files[0].path }} {{ biopet_jar.path }}
   become: true
 
 - template: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
