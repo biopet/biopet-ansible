@@ -1,0 +1,8 @@
+---
+
+- include: java7-oracle.yml
+- include: maven3.yml
+- include: git.yml
+- include: gatk-protected.yml
+- include: biopet.yml
+

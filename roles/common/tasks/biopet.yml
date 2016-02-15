@@ -1,0 +1,37 @@
+---
+
+- git: repo=https://git.lumc.nl/biopet/biopet.git
+       dest={{ biopet_dir }}/src/biopet
+       version={{ biopet_version }}
+       force=yes
+  register: biopet_checkout
+  become: true
+  name: Checkout biopet on {{ biopet_version }}
+
+- command: chdir={{ biopet_dir }}/src/biopet
+           mvn -DskipTests=true clean install
+  when: biopet_checkout.before != biopet_checkout.after
+  become: true
+  name: Build biopet
+
+- file: path={{ biopet_dir }}/programs/biopet/ state=directory
+  become: true
+  name: checking biopet dir
+
+- find: paths={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/ patterns="Biopet-?.?.?*.jar"
+  register: find_jar
+  name: Finding final jar
+
+- file: path={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }} state=absent
+  register: biopet_jar
+  become: true
+  name: Placholder for biopet jar
+
+- command: cp {{ find_jar.files[0].path }} {{ biopet_jar.path }}
+  become: true
+  name: Copy jar
+
+- template: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
+  become: true
+  name: Setting up biopet profile
+

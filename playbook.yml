@@ -3,11 +3,12 @@
   remote_user: root
   become_user: root
   roles:
-  - role: git
-  - role: java7-oracle
-  - role: maven3
-  - role: gatk-protected
-  - role: biopet
+  - role: common
+#  - role: git
+#  - role: java7-oracle
+#  - role: maven3
+#  - role: gatk-protected
+#  - role: biopet
   vars:
     biopet_dir: /usr/local/biopet
     biopet_version: develop
