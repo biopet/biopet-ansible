@@ -1,0 +1,5 @@
+export BIOPET_JAR="{{ biopet.jar.path }}"
+export BIOPET_CONFIG="{{ biopet_dir }}/config/biopet.{{ biopet_version }}.json"
+
+alias biopet="java -Xmx2G -jar `readlink $BIOPET_JAR` $*"
+

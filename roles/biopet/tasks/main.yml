@@ -2,7 +2,7 @@
 
 - git: repo=https://git.lumc.nl/biopet/biopet.git
        dest={{ biopet_dir }}/src/biopet
-       version=develop
+       version={{ biopet_version }}
        force=yes
   register: biopet_checkout
   become: true
@@ -15,6 +15,15 @@
 - file: path={{ biopet_dir }}/programs/biopet/ state=directory
   become: true
 
-- copy: src={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/Biopet-?.?.?*.jar dest={{ biopet_dir }}/programs/biopet/ owner=root group=root mode=755
+- find: paths={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/ patterns="Biopet-?.?.?*.jar"
+  register: find_jar
+
+- file: path={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }}
+  register: biopet_jar
+
+- command: cp {{ find_jar.files[0].path }} {{ biopet_jar.path }} creates={{ biopet_jar.path }}
+  become: true
+
+- tempplate: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
   become: true
 

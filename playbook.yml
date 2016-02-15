@@ -10,6 +10,7 @@
   - role: biopet
   vars:
     biopet_dir: /usr/local/biopet
+    biopet_version: develop
     maven_version: 3.3.3
     maven_url: http://www.apache.org/dist/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz
     maven_dir: "{{ biopet_dir }}/programs/maven/apache-maven-{{ maven_version }}"
