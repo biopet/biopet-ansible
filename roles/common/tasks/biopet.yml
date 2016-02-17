@@ -22,12 +22,9 @@
   register: find_jar
   name: Finding final jar
 
-- file: path={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }} state=absent
-  register: biopet_jar
-  become: true
-  name: Placholder for biopet jar
+- set_fact: biopet_jar={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }}
 
-- command: cp {{ find_jar.files[0].path }} {{ biopet_jar.path }}
+- copy: src={{ find_jar.files[0].path }} dest={{ biopet_jar }} mode=644 remote_src=yes
   become: true
   name: Copy jar
 

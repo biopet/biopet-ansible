@@ -2,7 +2,7 @@
 
 - include: java7-oracle.yml
 - include: maven3.yml
-- include: git.yml
+- include: ubuntu-packages.yml
 - include: gatk-protected.yml
 - include: biopet.yml
 

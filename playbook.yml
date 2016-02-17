@@ -4,7 +4,7 @@
   become_user: root
   roles:
   - role: common
-#  - role: git
+  - role: flexiprep
 #  - role: java7-oracle
 #  - role: maven3
 #  - role: gatk-protected
@@ -17,4 +17,7 @@
     maven_version: 3.3.3
     maven_url: http://www.apache.org/dist/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz
     maven_dir: "{{ biopet_dir }}/programs/maven/apache-maven-{{ maven_version }}"
+  handlers:
+    - name: Create config from template
+      template: src=templates/biopet_config.json.j2 dest={{ biopet_dir }}/config/biopet.json mode=755
 

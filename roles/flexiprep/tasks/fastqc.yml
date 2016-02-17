@@ -1,0 +1,23 @@
+- name: Checking fastqc dir
+  file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/ state=directory
+  become: true
+
+- name: Download FastQC
+  get_url:
+    url=http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v{{ version }}.zip
+    dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}.zip
+  become: true
+
+- name: Uncompress FastQC
+  unarchive:
+    src={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}.zip
+    dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}
+    copy=no
+  become: true
+
+- name: Setting executeable
+  file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc mode=755
+  become: true
+
+- set_fact: fastqc_exe={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc
+
