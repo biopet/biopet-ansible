@@ -6,3 +6,9 @@
     - git
     - unzip
     - zlib1g-dev
+    - python-pip
+    - python3-pip
+    - python-virtualenv
+    - python2.7-dev
+    - python3.4-dev
+
