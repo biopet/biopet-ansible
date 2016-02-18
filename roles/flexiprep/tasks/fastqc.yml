@@ -18,6 +18,7 @@
 - name: Setting executeable
   file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc mode=755
   become: true
+  notify: Create config from template
 
 - set_fact: fastqc_exe={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc
 

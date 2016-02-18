@@ -5,3 +5,4 @@
   with_items:
     - git
     - unzip
+    - zlib1g-dev

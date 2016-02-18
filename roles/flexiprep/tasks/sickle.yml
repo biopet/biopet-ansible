@@ -1,0 +1,22 @@
+- name: Checkout sickle
+  git: repo=https://github.com/najoshi/sickle.git
+       dest={{ biopet_dir }}/src/sickle
+       version={{ version }}
+       force=yes
+  register: seqtk_checkout
+  become: true
+
+- name: Compile sickle
+  command: make
+           chdir={{ biopet_dir }}/src/sickle
+  become: true
+
+- name: Copy sickle to bin
+  copy: src={{ biopet_dir }}/src/sickle/sickle
+        dest={{ biopet_dir }}/bin/sickle
+        remote_src=yes
+        mode=755
+  become: true
+
+- set_fact: sickle_exe={{ biopet_dir }}/bin/sickle
+
