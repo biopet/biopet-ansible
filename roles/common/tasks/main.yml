@@ -3,6 +3,6 @@
 - include: java7-oracle.yml
 - include: maven3.yml
 - include: ubuntu-packages.yml
-- include: gatk-protected.yml
+- include: gatk-protected.yml version=3.5
 - include: biopet.yml
 
