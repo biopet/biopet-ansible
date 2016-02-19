@@ -1,0 +1,30 @@
+- name: Clone bwa git repo
+  git: repo=https://github.com/lh3/bwa.git
+       dest={{ biopet_dir }}/src/bwa
+       version={{ version }}
+       force=yes
+  become: true
+
+- name: Compiling bwa
+  command: make
+           chdir={{ biopet_dir }}/src/bwa
+  become: true
+
+- name: Copy binary
+  copy: src={{ biopet_dir }}/src/bwa/bwa
+        dest={{ biopet_dir }}/programs/bwa/bwa-{{ version }}
+        remote_src=yes
+        mode=755
+  become: true
+
+- file: src={{ biopet_dir }}/programs/bwa/bwa-{{ version }}
+        dest={{ biopet_dir }}/programs/bwa/bwa
+        state=link
+  become: true
+
+- file: src={{ biopet_dir }}/programs/bwa/bwa
+        dest={{ biopet_dir }}/bin/bwa
+        state=link
+  become: true
+
+- set_fact: bwa_exe={{ biopet_dir }}/programs/bwa/bwa-{{ version }}
