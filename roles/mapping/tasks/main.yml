@@ -1,3 +1,4 @@
 ---
 
 - include: bwa.yml version=0.7.12
+- include: samtools version=1.3

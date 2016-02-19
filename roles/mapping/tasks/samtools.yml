@@ -1,0 +1,13 @@
+- name: Clone bwa git repo
+  git: repo=https://github.com/samtools/samtools.git
+       dest={{ biopet_dir }}/src/samtools
+       version={{ version }}
+       force=yes
+  become: true
+
+- name: Compiling bwa
+  command: make prefix={{ biopet_dir }} install
+           chdir={{ biopet_dir }}/src/samtools
+  become: true
+
+- set_fact: samtools_exe={{ biopet_dir }}/bin/samtools
