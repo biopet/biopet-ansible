@@ -21,4 +21,3 @@
   notify: Create config from template
 
 - set_fact: fastqc_exe={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc
-

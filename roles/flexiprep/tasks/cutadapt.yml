@@ -8,4 +8,3 @@
   become: true
 
 - set_fact: cutadapt_exe={{ biopet_dir }}/bin/cutadapt
-

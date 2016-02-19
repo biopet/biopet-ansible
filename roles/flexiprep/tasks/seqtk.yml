@@ -19,4 +19,3 @@
   become: true
 
 - set_fact: seqtk_exe={{ biopet_dir }}/bin/seqtk
-

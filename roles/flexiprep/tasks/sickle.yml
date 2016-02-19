@@ -19,4 +19,3 @@
   become: true
 
 - set_fact: sickle_exe={{ biopet_dir }}/bin/sickle
-
