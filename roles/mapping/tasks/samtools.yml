@@ -1,11 +1,18 @@
-- name: Clone bwa git repo
+- name: Clone htslib git repo
+  git: repo=https://github.com/samtools/htslib.git
+       dest={{ biopet_dir }}/src/htslib
+       version={{ version }}
+       force=yes
+  become: true
+
+- name: Clone samtools git repo
   git: repo=https://github.com/samtools/samtools.git
        dest={{ biopet_dir }}/src/samtools
        version={{ version }}
        force=yes
   become: true
 
-- name: Compiling bwa
+- name: Compiling samtools
   command: make prefix={{ biopet_dir }} install
            chdir={{ biopet_dir }}/src/samtools
   become: true
