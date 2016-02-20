@@ -10,6 +10,11 @@
            chdir={{ biopet_dir }}/src/bwa
   become: true
 
+- file: path={{ biopet_dir }}/programs/bwa
+        state=directory
+        mode=755
+  become: true
+
 - name: Copy binary
   copy: src={{ biopet_dir }}/src/bwa/bwa
         dest={{ biopet_dir }}/programs/bwa/bwa-{{ version }}
