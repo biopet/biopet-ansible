@@ -24,4 +24,4 @@
         mode=755
   become: true
 
-- set_fact: star_exe={{ biopet_dir }}/bin/STARlong
+- set_fact: star_exe={{ biopet_dir }}/bin/STAR

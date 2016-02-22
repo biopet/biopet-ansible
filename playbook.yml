@@ -6,12 +6,13 @@
   - role: common
   - role: flexiprep
   - role: mapping
-#  - role: maven3
+  - role: references
 #  - role: gatk-protected
 #  - role: biopet
   vars:
     biopet_dir: /usr/local/biopet
     biopet_version: develop
+    biopet_reference_dir: /usr/local/biopet/references
     biopet_python2_env: "{{ biopet_dir }}/python_envs/pyhton2"
     biopet_python3_env: "{{ biopet_dir }}/python_envs/pyhton3"
     maven_version: 3.3.3

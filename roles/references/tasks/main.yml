@@ -1,0 +1,6 @@
+---
+
+- include: reference.yml
+           reference_url=https://barmsijs.lumc.nl/reference.fasta
+           species=test
+           reference_name=test
