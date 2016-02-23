@@ -1,17 +1,14 @@
 ---
 
 - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/annotation state=directory mode=755
-  become: true
 
 - name: Download reference
   get_url: url={{ reference_url }}
            dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-  become: true
 
 - name: Create fai
   command: >
     {{ samtools_exe }} faidx {{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-  become: true
   when: samtools_exe is defined
 
 - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict state=absent
@@ -21,7 +18,6 @@
   command: java -cp {{ picard_jar }} picard.sam.CreateSequenceDictionary
            "REFERENCE={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta"
            "OUTPUT={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict"
-  become: true
   when: biopet_jar is defined
 
 - block:
@@ -33,7 +29,6 @@
       {{ bwa_exe }} index {{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
       chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa"
   when: bwa_exe is defined
-  become: true
 
 - block:
   - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/star state=directory mode=755
@@ -49,4 +44,3 @@
       --genomeFastaFiles {{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
       chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/star"
   when: star_exe is defined
-  become: true
