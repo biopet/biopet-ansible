@@ -1,52 +1,52 @@
 ---
 
-- file: path={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/annotation state=directory mode=755
+- file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/annotation state=directory mode=755
   become: true
 
 - name: Download reference
   get_url: url={{ reference_url }}
-           dest={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+           dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
   become: true
 
 - name: Create fai
   command: >
-    {{ samtools_exe }} faidx {{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+    {{ samtools_exe }} faidx {{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
   become: true
   when: samtools_exe is defined
 
-- file: path={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict state=absent
+- file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict state=absent
   become: true
 
 - name: Create dict
   command: java -cp {{ biopet_jar }} picard.sam.CreateSequenceDictionary
-           "REFERENCE={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta"
-           "OUTPUT={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict"
+           "REFERENCE={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta"
+           "OUTPUT={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict"
   become: true
   when: biopet_jar is defined
 
 - block:
-  - file: path={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/bwa state=directory mode=755
-  - file: src={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-          dest={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
+  - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa state=directory mode=755
+  - file: src={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+          dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
           state=link
   - command: >
-      {{ bwa_exe }} index {{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
-      chdir="{{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/bwa"
+      {{ bwa_exe }} index {{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
+      chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa"
   when: bwa_exe is defined
   become: true
 
 - block:
-  - file: path={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/star state=directory mode=755
-  - file: src={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-          dest={{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
+  - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/star state=directory mode=755
+  - file: src={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+          dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
           state=link
   # Need to add gtf file here
   - command: >
       {{ star_exe }}
       --runThreadN {{ threads|default(1) }}
       --runMode genomeGenerate
-      --genomeDir {{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/star
-      --genomeFastaFiles {{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
-      chdir="{{ biopet_reference_dir }}/{{ species }}/{{ reference_name }}/star"
+      --genomeDir {{ reference_dir }}/{{ species }}/{{ reference_name }}/star
+      --genomeFastaFiles {{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
+      chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/star"
   when: star_exe is defined
   become: true

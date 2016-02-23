@@ -2,24 +2,14 @@
 - hosts: all
   remote_user: root
   become_user: root
+  become: true
   roles:
-  - role: common
-  - role: flexiprep
-  - role: mapping
+  - role: biopet
   - role: references
-#  - role: gatk-protected
-#  - role: biopet
   vars:
     biopet_dir: /usr/local/biopet
     biopet_version: develop
-    biopet_reference_dir: /usr/local/biopet/references
-    biopet_python2_env: "{{ biopet_dir }}/python_envs/pyhton2"
-    biopet_python3_env: "{{ biopet_dir }}/python_envs/pyhton3"
-    maven_version: 3.3.3
-    maven_url: http://www.apache.org/dist/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz
-    maven_dir: "{{ biopet_dir }}/programs/maven/apache-maven-{{ maven_version }}"
+    reference_dir: /usr/local/biopet/references
   handlers:
     - name: Create config from template
       template: src=templates/biopet_config.yml.j2 dest={{ biopet_config }} mode=644
-      become: true
-

@@ -1,4 +1,9 @@
 ---
+- vars:
+    maven_url: http://www.apache.org/dist/maven/maven-3/{{ version }}/binaries/apache-maven-{{ version }}-bin.tar.gz
+    maven_dir: "{{ biopet_dir }}/programs/maven/apache-maven-{{ version }}"
+
+
 - get_url: url={{ maven_url }} dest=/tmp/maven.{{ maven_version }}.tgz
   name: Download maven package
   register: maven_download
