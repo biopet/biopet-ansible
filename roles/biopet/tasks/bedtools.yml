@@ -3,18 +3,15 @@
        dest={{ biopet_dir }}/src/bedtools
        version={{ version }}
        force=yes
-  become: true
 
 - name: Compiling bedtools
   command: make
            chdir={{ biopet_dir }}/src/bedtools
-  become: true
 
 - name: Copy binary of bedtools
   copy: src={{ biopet_dir }}/src/bedtools/bin/bedtools
         dest={{ biopet_dir }}/bin/bedtools
         remote_src=yes
         mode=755
-  become: true
 
 - set_fact: bedtools_exe={{ biopet_dir }}/bin/bedtools

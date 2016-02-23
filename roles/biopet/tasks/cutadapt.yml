@@ -2,9 +2,7 @@
   pip: name=cutadapt 
        version={{ version }}
        virtualenv={{ biopet_dir }}/programs/cutadapt/
-  become: true
 
 - file: src={{ biopet_dir }}/programs/cutadapt/bin/cutadapt dest={{ biopet_dir }}/bin/cutadapt state=link
-  become: true
 
 - set_fact: cutadapt_exe={{ biopet_dir }}/bin/cutadapt

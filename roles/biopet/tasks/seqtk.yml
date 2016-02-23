@@ -4,18 +4,15 @@
        version={{ version }}
        force=yes
   register: seqtk_checkout
-  become: true
 
 - name: Compile seqtk
   command: make
            chdir={{ biopet_dir }}/src/seqtk
-  become: true
 
 - name: Copy seqtk to bin
   copy: src={{ biopet_dir }}/src/seqtk/seqtk
         dest={{ biopet_dir }}/bin/seqtk
         remote_src=yes
         mode=755
-  become: true
 
 - set_fact: seqtk_exe={{ biopet_dir }}/bin/seqtk

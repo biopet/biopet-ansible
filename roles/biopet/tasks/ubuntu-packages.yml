@@ -1,6 +1,5 @@
 ---
 - name: Install common ubuntu packages
-  become: true
   apt: name={{ item }} state=latest
   with_items:
     - git

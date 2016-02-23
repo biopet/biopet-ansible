@@ -5,17 +5,14 @@
        version={{ biopet_version }}
        force=yes
   register: biopet_checkout
-  become: true
   name: Checkout biopet on {{ biopet_version }}
 
 - command: chdir={{ biopet_dir }}/src/biopet
            mvn -DskipTests=true clean install
   when: biopet_checkout.before != biopet_checkout.after
-  become: true
   name: Build biopet
 
 - file: path={{ biopet_dir }}/programs/biopet/ state=directory
-  become: true
   name: checking biopet dir
 
 - name: Check config dir
@@ -24,7 +21,6 @@
 
 - name: Check bin dir
   file: path={{ biopet_dir }}/bin/ state=directory
-  become: true
 
 - find: paths={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/ patterns="Biopet-?.?.?*.jar"
   register: find_jar
@@ -34,9 +30,7 @@
 - set_fact: biopet_config={{ biopet_dir }}/config/biopet.{{ biopet_version }}.yml
 
 - copy: src={{ find_jar.files[0].path }} dest={{ biopet_jar }} mode=644 remote_src=yes
-  become: true
   name: Copy jar
 
 - template: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
-  become: true
   name: Setting up biopet profile

@@ -5,23 +5,19 @@
        version={{ version }}
        force=yes
   register: gatk_checkout
-  become: true
   name: Checkout gatk-protected
 
 - command: chdir={{ biopet_dir }}/src/gatk-protected
            mvn clean install
   when: gatk_checkout.before != gatk_checkout.after
-  become: true
   name: Build gatk-protected
 
 - file: path={{ biopet_dir }}/programs/gatk/ state=directory mode=755
-  become: true
 
 - copy: src={{ biopet_dir }}/src/gatk-protected/target/GenomeAnalysisTK.jar
         dest={{ biopet_dir }}/programs/gatk/GenomeAnalysisTK-{{ version }}.jar
         remote_src=true
         mode=644
-  become: true
 
 - set_fact: gatk_jar={{ biopet_dir }}/programs/gatk/GenomeAnalysisTK-{{ version }}.jar
 

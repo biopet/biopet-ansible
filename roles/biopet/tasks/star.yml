@@ -3,25 +3,21 @@
        dest={{ biopet_dir }}/src/star
        version={{ version }}
        force=yes
-  become: true
 
 - name: Compiling star
   command: make STAR
            chdir={{ biopet_dir }}/src/star
-  become: true
 
 - name: Copy binary of star
   copy: src={{ biopet_dir }}/src/star/bin/Linux_x86_64_static/STAR
         dest={{ biopet_dir }}/bin/STAR
         remote_src=yes
         mode=755
-  become: true
 
 - name: Copy binary of star-long
   copy: src={{ biopet_dir }}/src/star/bin/Linux_x86_64_static/STARlong
         dest={{ biopet_dir }}/bin/STARlong
         remote_src=yes
         mode=755
-  become: true
 
 - set_fact: star_exe={{ biopet_dir }}/bin/STAR
