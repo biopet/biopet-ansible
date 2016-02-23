@@ -3,10 +3,12 @@
        dest={{ biopet_dir }}/src/bedtools
        version={{ version }}
        force=yes
+  register: bedtools_checkout
 
 - name: Compiling bedtools
   command: make
            chdir={{ biopet_dir }}/src/bedtools
+  when: bedtools_checkout.before != bedtools_checkout.after
 
 - name: Copy binary of bedtools
   copy: src={{ biopet_dir }}/src/bedtools/bin/bedtools

@@ -18,7 +18,7 @@
   become: true
 
 - name: Create dict
-  command: java -cp {{ biopet_jar }} picard.sam.CreateSequenceDictionary
+  command: java -cp {{ picard_jar }} picard.sam.CreateSequenceDictionary
            "REFERENCE={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta"
            "OUTPUT={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict"
   become: true

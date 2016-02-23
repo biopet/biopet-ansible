@@ -3,10 +3,12 @@
        dest={{ biopet_dir }}/src/star
        version={{ version }}
        force=yes
+  register: star_checkout
 
 - name: Compiling star
   command: make STAR
            chdir={{ biopet_dir }}/src/star
+  when: star_checkout.before != star_checkout.after
 
 - name: Copy binary of star
   copy: src={{ biopet_dir }}/src/star/bin/Linux_x86_64_static/STAR

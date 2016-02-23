@@ -3,10 +3,12 @@
        dest={{ biopet_dir }}/src/bwa
        version={{ version }}
        force=yes
+  register: bwa_checkout
 
 - name: Compiling bwa
   command: make
            chdir={{ biopet_dir }}/src/bwa
+  when: bwa_checkout.before != bwa_checkout.after
 
 - file: path={{ biopet_dir }}/programs/bwa
         state=directory

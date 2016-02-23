@@ -1,0 +1,15 @@
+- name: Download picard package
+  get_url: url=https://github.com/broadinstitute/picard/releases/download/{{ version }}/picard-tools-{{ version }}.zip
+           dest=/tmp/picard.{{ version }}.zip
+  register: picard_download
+
+- file: path={{ biopet_dir }}/programs/picard/{{ version }} state=directory mode=755
+
+- name: Extracting picard
+  unarchive: >
+    copy=no
+    src=/tmp/picard.{{ version }}.zip
+    dest={{ biopet_dir }}/programs/picard/{{ version }}
+  when: picard_download|changed
+
+- set_fact: picard_jar={{ biopet_dir }}/programs/picard/{{ version }}/picard-tools-{{ version }}/picard.jar

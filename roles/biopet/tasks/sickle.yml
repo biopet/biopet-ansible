@@ -8,6 +8,7 @@
 - name: Compile sickle
   command: make
            chdir={{ biopet_dir }}/src/sickle
+  when: seqtk_checkout.before != seqtk_checkout.after
 
 - name: Copy sickle to bin
   copy: src={{ biopet_dir }}/src/sickle/sickle

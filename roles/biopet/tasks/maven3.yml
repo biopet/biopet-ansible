@@ -20,6 +20,7 @@
     copy=no
     src=/tmp/maven.{{ version }}.tgz
     dest={{ biopet_dir }}/programs/maven/
+  when: maven_download|changed
 
 - file: src={{ maven_dir }}/bin/mvn dest=/usr/local/bin/mvn owner=root group=root state=link
   name: Link maven to global path

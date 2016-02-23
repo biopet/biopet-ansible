@@ -8,6 +8,7 @@
 - name: Compile seqtk
   command: make
            chdir={{ biopet_dir }}/src/seqtk
+  when: seqtk_checkout.before != seqtk_checkout.after
 
 - name: Copy seqtk to bin
   copy: src={{ biopet_dir }}/src/seqtk/seqtk

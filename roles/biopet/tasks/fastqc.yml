@@ -5,12 +5,14 @@
   get_url:
     url=http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v{{ version }}.zip
     dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}.zip
+  register: fastqc_download
 
 - name: Uncompress FastQC
   unarchive:
     src={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}.zip
     dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}
     copy=no
+  when: fastqc_download|changed
 
 - name: Setting executeable
   file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc mode=755

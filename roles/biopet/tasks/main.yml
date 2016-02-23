@@ -3,8 +3,6 @@
 - include: java7-oracle.yml
 - include: maven3.yml version=3.3.3
 - include: ubuntu-packages.yml
-- include: gatk-protected.yml version=3.5
-- include: biopet.yml
 
 # Flexiprep
 
@@ -15,7 +13,16 @@
 
 # Mapping
 
+- include: picard.yml version=1.141
 - include: bwa.yml version=0.7.12
 - include: star.yml version=2.5.1b
 - include: samtools.yml version=1.3
 - include: bedtools.yml version=v2.25.0
+
+# Shiva
+
+- include: gatk-protected.yml version=3.5
+
+# Biopet
+
+- include: biopet.yml

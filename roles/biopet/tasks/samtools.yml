@@ -3,15 +3,18 @@
        dest={{ biopet_dir }}/src/htslib
        version={{ version }}
        force=yes
+  register: htslib_checkout
 
 - name: Clone samtools git repo
   git: repo=https://github.com/samtools/samtools.git
        dest={{ biopet_dir }}/src/samtools
        version={{ version }}
        force=yes
+  register: samtools_checkout
 
 - name: Compiling samtools
   command: make prefix={{ biopet_dir }} install
            chdir={{ biopet_dir }}/src/samtools
+  when: htslib_checkout.before != htslib_checkout.after or samtools_checkout.before != samtools_checkout.after
 
 - set_fact: samtools_exe={{ biopet_dir }}/bin/samtools
