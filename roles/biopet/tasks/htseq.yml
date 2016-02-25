@@ -1,0 +1,12 @@
+- name: Install numpy
+  pip: name=numpy
+       virtualenv={{ biopet_dir }}/programs/htseq/
+
+- name: Install htseq
+  pip: name=htseq
+       version={{ version }}
+       virtualenv={{ biopet_dir }}/programs/htseq/
+
+- file: src={{ biopet_dir }}/programs/htseq/bin/htseq-count dest={{ biopet_dir }}/bin/htseq-count state=link
+
+- set_fact: htseqcount_exe={{ biopet_dir }}/bin/htseq-count

@@ -24,6 +24,10 @@
 - include: gatk-protected.yml version=3.5
 - include: bcftools.yml version=1.3
 
+# Gentrap
+
+- include: htseq.yml version=0.6.1
+
 # Biopet
 
 - include: biopet.yml
