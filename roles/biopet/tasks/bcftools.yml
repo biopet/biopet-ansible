@@ -13,6 +13,11 @@
   register: bcftools_checkout
 
 - name: Compiling bcftools
+  command: make
+           chdir={{ biopet_dir }}/src/bcftools
+  when: htslib_checkout.before != htslib_checkout.after or bcftools_checkout.before != bcftools_checkout.after
+
+- name: Installing bcftools
   command: make prefix={{ biopet_dir }} install
            chdir={{ biopet_dir }}/src/bcftools
   when: htslib_checkout.before != htslib_checkout.after or bcftools_checkout.before != bcftools_checkout.after
