@@ -2,5 +2,4 @@ export BIOPET_JAR="{{ biopet_jar }}"
 export BIOPET_CONFIG="{{ biopet_config }}"
 export PATH=$PATH:{{ biopet_dir }}/bin
 
-alias biopet="java -Xmx2G -jar `readlink -f $BIOPET_JAR` $*"
-
+alias biopet="java -Xmx2G -jar `readlink -f $BIOPET_JAR`"
