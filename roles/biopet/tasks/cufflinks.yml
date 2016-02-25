@@ -1,0 +1,37 @@
+- file: path={{ biopet_dir }}/programs/cufflinks state=directory mode=755
+
+- get_url: url=http://cole-trapnell-lab.github.io/cufflinks/assets/downloads/cufflinks-{{ version }}.Linux_x86_64.tar.gz
+        dest={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64.tar.gz
+  register: cufflinks_download
+
+- name: Extracting cufflinks
+  unarchive: >
+    copy=no
+    src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64.tar.gz
+    dest={{ biopet_dir }}/programs/cufflinks/
+  when: cufflinks_download|changed
+
+- file: src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64/cufflinks
+        dest={{ biopet_dir }}/bin/cufflinks
+        state=link
+
+- file: src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64/cuffcompare
+        dest={{ biopet_dir }}/bin/cuffcompare
+        state=link
+
+- file: src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64/cuffmerge
+        dest={{ biopet_dir }}/bin/cuffmerge
+        state=link
+- file: src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64/cuffdiff
+        dest={{ biopet_dir }}/bin/cuffdiff
+        state=link
+
+- file: src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64/cuffnorm
+        dest={{ biopet_dir }}/bin/cuffnorm
+        state=link
+
+- file: src={{ biopet_dir }}/programs/cufflinks/cufflinks-{{ version }}.Linux_x86_64/cuffquant
+        dest={{ biopet_dir }}/bin/cuffquant
+        state=link
+
+- set_fact: cufflinks_exe={{ biopet_dir }}/bin/cufflinks

@@ -27,6 +27,7 @@
 # Gentrap
 
 - include: htseq.yml version=0.6.1
+- include: cufflinks.yml version=2.2.1
 
 # Biopet
 
