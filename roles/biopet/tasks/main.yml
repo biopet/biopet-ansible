@@ -25,6 +25,7 @@
 - include: bcftools.yml version=1.3
 - include: vt.yml version=0.57
 - include: freebayes.yml version=v1.0.2
+- include: varscan.yml version=v2.4.1
 
 # Gentrap
 
