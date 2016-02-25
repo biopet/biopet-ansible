@@ -1,0 +1,20 @@
+- name: Clone htslib git repo
+  git: repo=https://github.com/samtools/htslib.git
+       dest={{ biopet_dir }}/src/htslib
+       version={{ version }}
+       force=yes
+  register: htslib_checkout
+
+- name: Clone bcftools git repo
+  git: repo=https://github.com/samtools/bcftools.git
+       dest={{ biopet_dir }}/src/bcftools
+       version={{ version }}
+       force=yes
+  register: bcftools_checkout
+
+- name: Compiling bcftools
+  command: make prefix={{ biopet_dir }} install
+           chdir={{ biopet_dir }}/src/bcftools
+  when: htslib_checkout.before != htslib_checkout.after or bcftools_checkout.before != bcftools_checkout.after
+
+- set_fact: bcftools_exe={{ biopet_dir }}/bin/bcftools
