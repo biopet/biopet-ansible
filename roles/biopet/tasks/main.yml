@@ -24,6 +24,7 @@
 - include: gatk-protected.yml version=3.5
 - include: bcftools.yml version=1.3
 - include: vt.yml version=0.57
+- include: freebayes.yml version=v1.0.2
 
 # Gentrap
 
