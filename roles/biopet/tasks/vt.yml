@@ -1,0 +1,19 @@
+- name: Clone vt git repo
+  git: repo=https://github.com/atks/vt.git
+       dest={{ biopet_dir }}/src/vt
+       version={{ version }}
+       force=yes
+  register: vt_checkout
+
+- name: Compiling vt
+  command: make
+           chdir={{ biopet_dir }}/src/vt
+  when: vt_checkout.before != vt_checkout.after
+
+- name: Copy binary of vt
+  copy: src={{ biopet_dir }}/src/vt/vt
+        dest={{ biopet_dir }}/bin/vt
+        remote_src=yes
+        mode=755
+
+- set_fact: vt_exe={{ biopet_dir }}/bin/vt
