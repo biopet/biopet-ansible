@@ -1,0 +1,14 @@
+- name: Clone htslib git repo
+  git: repo=https://github.com/samtools/htslib.git
+       dest={{ biopet_dir }}/src/htslib
+       version={{ version }}
+       force=yes
+  register: htslib_checkout
+
+- name: Compiling htslib
+  command: make prefix={{ biopet_dir }} install
+           chdir={{ biopet_dir }}/src/htslib
+  when: htslib_checkout.before != htslib_checkout.after
+
+- set_fact: tabix_exe={{ biopet_dir }}/bin/tabix
+- set_fact: bgzip_exe={{ biopet_dir }}/bin/bgzip
