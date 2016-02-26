@@ -5,42 +5,34 @@
 - name: Download reference
   get_url: url={{ reference_url }}
            dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+  register: download_fasta
+
+- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+  register: fasta_stat
+
+- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta.fai
+  register: fai_stat
+
+- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict
+  register: dict_stat
 
 - name: Create fai
   command: >
     {{ samtools_exe }} faidx {{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-  when: samtools_exe is defined
+  when: samtools_exe is defined and (not fai_stat.stat.exists or download_fasta|changed or fasta_stat.stat.mtime > fai_stat.stat.mtime)
 
 - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict state=absent
   become: true
+  when: picard_jar is defined and dict_stat.stat.exists and (download_fasta|changed or fasta_stat.stat.mtime > dict_stat.stat.mtime)
 
 - name: Create dict
   command: java -cp {{ picard_jar }} picard.sam.CreateSequenceDictionary
            "REFERENCE={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta"
            "OUTPUT={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict"
-  when: biopet_jar is defined
+  when: picard_jar is defined and (not dict_stat.stat.exists or download_fasta|changed or dict_stat.stat.mtime > dict_stat.stat.mtime)
 
-- block:
-  - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa state=directory mode=755
-  - file: src={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-          dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
-          state=link
-  - command: >
-      {{ bwa_exe }} index {{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
-      chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa"
+- include: bwa_index.yml
   when: bwa_exe is defined
 
-- block:
-  - file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/star state=directory mode=755
-  - file: src={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-          dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
-          state=link
-  # Need to add gtf file here
-  - command: >
-      {{ star_exe }}
-      --runThreadN {{ threads|default(1) }}
-      --runMode genomeGenerate
-      --genomeDir {{ reference_dir }}/{{ species }}/{{ reference_name }}/star
-      --genomeFastaFiles {{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
-      chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/star"
+- include: star_index.yml
   when: star_exe is defined
