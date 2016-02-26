@@ -1,7 +1,7 @@
 - name: Checkout seqtk
   git: repo=https://github.com/lh3/seqtk.git
        dest={{ biopet_dir }}/src/seqtk
-       version={{ version }}
+       version={{ seqtk_version }}
        force=yes
   register: seqtk_checkout
 

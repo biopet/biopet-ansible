@@ -4,7 +4,7 @@
 
 - name: Install htseq
   pip: name=htseq
-       version={{ version }}
+       version={{ htseq_version }}
        virtualenv={{ biopet_dir }}/programs/htseq/
 
 - file: src={{ biopet_dir }}/programs/htseq/bin/htseq-count dest={{ biopet_dir }}/bin/htseq-count state=link

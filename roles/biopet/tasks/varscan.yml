@@ -1,7 +1,7 @@
 - file: path={{ biopet_dir }}/programs/varscan state=directory mode=755
 
-- get_url: url=https://github.com/dkoboldt/varscan/releases/download/{{ version }}/VarScan.{{ version }}.jar
-           dest={{ biopet_dir }}/programs/varscan/VarScan.{{ version }}.jar
+- get_url: url=https://github.com/dkoboldt/varscan/releases/download/{{ varscan_version }}/VarScan.{{ varscan_version }}.jar
+           dest={{ biopet_dir }}/programs/varscan/VarScan.{{ varscan_version }}.jar
            mode=644
 
-- set_fact: varscan_jar={{ biopet_dir }}/programs/varscan/VarScan.{{ version }}.jar
+- set_fact: varscan_jar={{ biopet_dir }}/programs/varscan/VarScan.{{ varscan_version }}.jar

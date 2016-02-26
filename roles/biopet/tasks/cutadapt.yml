@@ -1,6 +1,6 @@
 - name: install cutadapt
   pip: name=cutadapt 
-       version={{ version }}
+       version={{ cutadapt_version }}
        virtualenv={{ biopet_dir }}/programs/cutadapt/
 
 - file: src={{ biopet_dir }}/programs/cutadapt/bin/cutadapt dest={{ biopet_dir }}/bin/cutadapt state=link

@@ -1,14 +1,14 @@
 ---
 
-- get_url: url={{ maven_url }} dest=/tmp/maven.{{ version }}.tgz
+- get_url: url={{ maven_url }} dest=/tmp/maven.{{ maven_version }}.tgz
   name: Download maven package
   register: maven_download
 
-- get_url: url={{ maven_url }}.md5 dest=/tmp/maven.{{ version }}.md5
+- get_url: url={{ maven_url }}.md5 dest=/tmp/maven.{{ maven_version }}.md5
   name: Download maven package md5
   register: maven_md5_download
 
-- command: echo " "{{ maven_url }} >> /tmp/maven.{{ version }}.md5 && md5sum -c /tmp/maven.{{ version }}.md5
+- command: echo " "{{ maven_url }} >> /tmp/maven.{{ maven_version }}.md5 && md5sum -c /tmp/maven.{{ maven_version }}.md5
   name: Checking md5sum
   when: maven_download|changed or maven_md5_download|changed
 
@@ -18,7 +18,7 @@
 - name: Extracting maven
   unarchive: >
     copy=no
-    src=/tmp/maven.{{ version }}.tgz
+    src=/tmp/maven.{{ maven_version }}.tgz
     dest={{ biopet_dir }}/programs/maven/
   when: maven_download|changed
 

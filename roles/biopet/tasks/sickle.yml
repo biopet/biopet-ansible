@@ -1,7 +1,7 @@
 - name: Checkout sickle
   git: repo=https://github.com/najoshi/sickle.git
        dest={{ biopet_dir }}/src/sickle
-       version={{ version }}
+       version={{ sickle_version }}
        force=yes
   register: seqtk_checkout
 

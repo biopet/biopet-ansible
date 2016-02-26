@@ -1,7 +1,7 @@
 - name: Clone bcftools git repo
   git: repo=https://github.com/samtools/bcftools.git
        dest={{ biopet_dir }}/src/bcftools
-       version={{ version }}
+       version={{ bcftools_version }}
        force=yes
   register: bcftools_checkout
 

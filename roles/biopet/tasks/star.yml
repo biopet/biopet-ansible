@@ -1,7 +1,7 @@
 - name: Clone star git repo
   git: repo=https://github.com/alexdobin/STAR.git
        dest={{ biopet_dir }}/src/star
-       version={{ version }}
+       version={{ star_version }}
        force=yes
   register: star_checkout
 

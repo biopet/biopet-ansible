@@ -1,7 +1,7 @@
 - name: Clone vt git repo
   git: repo=https://github.com/atks/vt.git
        dest={{ biopet_dir }}/src/vt
-       version={{ version }}
+       version={{ vt_version }}
        force=yes
   register: vt_checkout
 

@@ -1,21 +1,21 @@
 - name: Checking fastqc dir
-  file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/ state=directory
+  file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ fastqc_version }}/ state=directory
 
 - name: Download FastQC
   get_url:
-    url=http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v{{ version }}.zip
-    dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}.zip
+    url=http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v{{ fastqc_version }}.zip
+    dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ fastqc_version }}.zip
   register: fastqc_download
 
 - name: Uncompress FastQC
   unarchive:
-    src={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}.zip
-    dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}
+    src={{ biopet_dir }}/programs/fastqc/fastqc_v{{ fastqc_version }}.zip
+    dest={{ biopet_dir }}/programs/fastqc/fastqc_v{{ fastqc_version }}
     copy=no
   when: fastqc_download|changed
 
 - name: Setting executeable
-  file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc mode=755
+  file: path={{ biopet_dir }}/programs/fastqc/fastqc_v{{ fastqc_version }}/FastQC/fastqc mode=755
   notify: Create config from template
 
-- set_fact: fastqc_exe={{ biopet_dir }}/programs/fastqc/fastqc_v{{ version }}/FastQC/fastqc
+- set_fact: fastqc_exe={{ biopet_dir }}/programs/fastqc/fastqc_v{{ fastqc_version }}/FastQC/fastqc

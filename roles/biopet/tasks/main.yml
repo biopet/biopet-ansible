@@ -1,39 +1,39 @@
 ---
 
 - include: java7-oracle.yml
-- include: maven3.yml version=3.3.3
+- include: maven3.yml
 - include: ubuntu-packages.yml
-- include: htslib.yml version=1.3
+- include: htslib.yml
 
 # Flexiprep
 
-- include: fastqc.yml version=0.11.2
-- include: seqtk.yml version=4feb6e81444ab6bc44139dd3a125068f81ae4ad8
-- include: sickle.yml version=v1.33
-- include: cutadapt.yml version=1.9
+- include: fastqc.yml
+- include: seqtk.yml
+- include: sickle.yml
+- include: cutadapt.yml
 
 # Mapping
 
-- include: picard.yml version=1.141
-- include: bwa.yml version=0.7.12
-- include: star.yml version=2.5.1b
-- include: bowtie.yml version=v1.1.2
-- include: bowtie2.yml version=v2.2.7
-- include: samtools.yml version=1.3
-- include: bedtools.yml version=v2.25.0
+- include: picard.yml
+- include: bwa.yml
+- include: star.yml
+- include: bowtie.yml
+- include: bowtie2.yml
+- include: samtools.yml
+- include: bedtools.yml
 
 # Shiva
 
-- include: gatk-protected.yml version=3.5
-- include: bcftools.yml version=1.3
-- include: vt.yml version=0.57
-- include: freebayes.yml version=v1.0.2
-- include: varscan.yml version=v2.4.1
+- include: gatk-protected.yml
+- include: bcftools.yml
+- include: vt.yml
+- include: freebayes.yml
+- include: varscan.yml
 
 # Gentrap
 
-- include: htseq.yml version=0.6.1
-- include: cufflinks.yml version=2.2.1
+- include: htseq.yml
+- include: cufflinks.yml
 
 # Biopet
 

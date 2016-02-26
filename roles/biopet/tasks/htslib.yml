@@ -1,7 +1,7 @@
 - name: Clone htslib git repo
   git: repo=https://github.com/samtools/htslib.git
        dest={{ biopet_dir }}/src/htslib
-       version={{ version }}
+       version={{ htslib_version }}
        force=yes
   register: htslib_checkout
 

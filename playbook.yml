@@ -7,8 +7,4 @@
   - role: biopet
   - role: references
   vars:
-    biopet_dir: /usr/local/biopet
-    biopet_version: develop
     reference_dir: /usr/local/biopet/references
-    maven_url: http://www.apache.org/dist/maven/maven-3/{{ version }}/binaries/apache-maven-{{ version }}-bin.tar.gz
-    maven_dir: "{{ biopet_dir }}/programs/maven/apache-maven-{{ version }}"

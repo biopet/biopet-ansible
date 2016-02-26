@@ -1,7 +1,7 @@
 - name: Clone freebayes git repo
   git: repo=https://github.com/ekg/freebayes.git
        dest={{ biopet_dir }}/src/freebayes
-       version={{ version }}
+       version={{ freebayes_version }}
        force=yes
   register: freebayes_checkout
 

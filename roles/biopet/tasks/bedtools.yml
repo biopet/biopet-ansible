@@ -1,7 +1,7 @@
 - name: Clone bedtools git repo
   git: repo=https://github.com/arq5x/bedtools2.git
        dest={{ biopet_dir }}/src/bedtools
-       version={{ version }}
+       version={{ bedtools_version }}
        force=yes
   register: bedtools_checkout
 

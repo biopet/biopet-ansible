@@ -1,7 +1,7 @@
 - name: Clone bowtie git repo
   git: repo=https://github.com/BenLangmead/bowtie.git
        dest={{ biopet_dir }}/src/bowtie
-       version={{ version }}
+       version={{ bowtie_version }}
        force=yes
   register: bowtie_checkout
 

@@ -2,7 +2,7 @@
 
 - git: repo=https://github.com/broadgsa/gatk-protected.git
        dest={{ biopet_dir }}/src/gatk-protected
-       version={{ version }}
+       version={{ gatk_version }}
        force=yes
   register: gatk_checkout
   name: Checkout gatk-protected
@@ -15,9 +15,9 @@
 - file: path={{ biopet_dir }}/programs/gatk/ state=directory mode=755
 
 - copy: src={{ biopet_dir }}/src/gatk-protected/target/GenomeAnalysisTK.jar
-        dest={{ biopet_dir }}/programs/gatk/GenomeAnalysisTK-{{ version }}.jar
+        dest={{ biopet_dir }}/programs/gatk/GenomeAnalysisTK-{{ gatk_version }}.jar
         remote_src=true
         mode=644
 
-- set_fact: gatk_jar={{ biopet_dir }}/programs/gatk/GenomeAnalysisTK-{{ version }}.jar
+- set_fact: gatk_jar={{ biopet_dir }}/programs/gatk/GenomeAnalysisTK-{{ gatk_version }}.jar
 
