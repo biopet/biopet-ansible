@@ -1,0 +1,14 @@
+- name: Clone bowtie git repo
+  git: repo=https://github.com/BenLangmead/bowtie.git
+       dest={{ biopet_dir }}/src/bowtie
+       version={{ version }}
+       force=yes
+  register: bowtie_checkout
+
+- name: Compiling bowtie
+  command: make prefix={{ biopet_dir }} install
+           chdir={{ biopet_dir }}/src/bowtie
+  when: bowtie_checkout.before != bowtie_checkout.after
+
+- set_fact: bowtie_exe={{ biopet_dir }}/bin/bowtie
+- set_fact: bowtiebuild_exe={{ biopet_dir }}/bin/bowtie-build

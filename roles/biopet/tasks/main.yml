@@ -17,6 +17,7 @@
 - include: picard.yml version=1.141
 - include: bwa.yml version=0.7.12
 - include: star.yml version=2.5.1b
+- include: bowtie.yml version=v1.1.2
 - include: samtools.yml version=1.3
 - include: bedtools.yml version=v2.25.0
 
