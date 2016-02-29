@@ -1,0 +1,7 @@
+- name: Clone ensembl-tools git repo
+  git: repo=https://github.com/Ensembl/ensembl-tools.git
+       dest={{ biopet_dir }}/src/ensembl-tools
+       version=release/{{ vep_version }}
+       force=yes
+  register: vep_checkout
+

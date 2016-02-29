@@ -29,6 +29,7 @@
 - include: vt.yml
 - include: freebayes.yml
 - include: varscan.yml
+- include: variant_effect_predictor.yml
 
 # Gentrap
 
