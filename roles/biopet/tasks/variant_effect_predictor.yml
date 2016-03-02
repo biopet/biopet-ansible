@@ -5,3 +5,19 @@
        force=yes
   register: vep_checkout
 
+- cpanm: name="Archive::Zip" locallib={{ biopet_dir }}/programs/vep/{{ vep_version }}
+- cpanm: name="DBI" locallib={{ biopet_dir }}/programs/vep/{{ vep_version }}
+- cpanm: name="LWP::Simple" locallib={{ biopet_dir }}/programs/vep/{{ vep_version }}
+
+- name: Install vep
+  expect:
+    command: perl {{ biopet_dir }}/src/ensembl-tools/scripts/variant_effect_predictor/INSTALL.pl --AUTO a -d {{ biopet_dir }}/programs/vep/{{ vep_version }}
+    responses:
+      (.*)PATH environment variable?: y
+  environment:
+    PERL5LIB: >
+      {{ biopet_dir }}/programs/vep/{{ vep_version }}/lib/perl5:{{ biopet_dir }}/programs/vep/{{ vep_version }}
+    PATH: >
+      "{{ biopet_dir }}/programs/vep/{{ vep_version }}/htslib:{{ ansible_env.PATH }}"
+    LD_LIBRARY_PATH: >
+      {{ biopet_dir }}/programs/vep/{{ vep_version }}/htslib
