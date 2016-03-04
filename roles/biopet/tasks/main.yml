@@ -19,6 +19,9 @@
 - include: star.yml
 - include: bowtie.yml
 - include: bowtie2.yml
+
+# BamMetrics
+
 - include: samtools.yml
 - include: bedtools.yml
 
