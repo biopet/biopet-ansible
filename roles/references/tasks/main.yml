@@ -1,6 +1,4 @@
 ---
 
-- include: reference.yml
-           reference_url=https://barmsijs.lumc.nl/reference.fasta
-           species=test
-           reference_name=test
+- include: reference.yml reference={{ item }}
+  with_items: "{{ references }}"

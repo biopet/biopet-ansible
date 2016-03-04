@@ -1,34 +1,34 @@
 ---
 
-- file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/annotation state=directory mode=755
+- file: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/annotation state=directory mode=755
 
 - name: Download reference
-  get_url: url={{ reference_url }}
-           dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+  get_url: url={{ reference.url_fasta }}
+           dest={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta
   register: download_fasta
 
-- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+- stat: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta
   register: fasta_stat
 
-- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta.fai
+- stat: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta.fai
   register: fai_stat
 
-- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict
+- stat: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.dict
   register: dict_stat
 
 - name: Create fai
   command: >
-    {{ samtools_exe }} faidx {{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
+    {{ samtools_exe }} faidx {{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta
   when: samtools_exe is defined and (not fai_stat.stat.exists or download_fasta|changed or fasta_stat.stat.mtime > fai_stat.stat.mtime)
 
-- file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict state=absent
+- file: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.dict state=absent
   become: true
   when: picard_jar is defined and dict_stat.stat.exists and (download_fasta|changed or fasta_stat.stat.mtime > dict_stat.stat.mtime)
 
 - name: Create dict
   command: java -cp {{ picard_jar }} picard.sam.CreateSequenceDictionary
-           "REFERENCE={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta"
-           "OUTPUT={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.dict"
+           "REFERENCE={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta"
+           "OUTPUT={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.dict"
   when: picard_jar is defined and (not dict_stat.stat.exists or download_fasta|changed or dict_stat.stat.mtime > dict_stat.stat.mtime)
 
 - include: bwa_index.yml

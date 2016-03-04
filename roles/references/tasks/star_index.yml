@@ -1,10 +1,10 @@
-- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/star/SA
+- stat: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/star/SA
   register: sa_stat
 
-- file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/star state=directory mode=755
+- file: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/star state=directory mode=755
 
-- file: src={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-        dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
+- file: src={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta
+        dest={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/star/reference.fasta
         state=link
 
 # Need to add gtf file here
@@ -12,7 +12,7 @@
     {{ star_exe }}
     --runThreadN {{ threads|default(1) }}
     --runMode genomeGenerate
-    --genomeDir {{ reference_dir }}/{{ species }}/{{ reference_name }}/star
-    --genomeFastaFiles {{ reference_dir }}/{{ species }}/{{ reference_name }}/star/reference.fasta
-    chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/star"
+    --genomeDir {{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/star
+    --genomeFastaFiles {{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/star/reference.fasta
+    chdir="{{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/star"
   when: not sa_stat.stat.exists or download_fasta|changed or fasta_stat.stat.mtime > sa_stat.stat.mtime

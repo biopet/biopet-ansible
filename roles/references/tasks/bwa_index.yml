@@ -1,13 +1,13 @@
-- stat: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta.pac
+- stat: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/bwa/reference.fasta.pac
   register: pac_stat
 
-- file: path={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa state=directory mode=755
+- file: path={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/bwa state=directory mode=755
 
-- file: src={{ reference_dir }}/{{ species }}/{{ reference_name }}/reference.fasta
-        dest={{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
+- file: src={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/reference.fasta
+        dest={{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/bwa/reference.fasta
         state=link
 
 - command: |
-    {{ bwa_exe }} index {{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa/reference.fasta
-    chdir="{{ reference_dir }}/{{ species }}/{{ reference_name }}/bwa"
+    {{ bwa_exe }} index {{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/bwa/reference.fasta
+    chdir="{{ reference_dir }}/{{ reference.species }}/{{ reference.name }}/bwa"
   when: not pac_stat.stat.exists or download_fasta|changed or fasta_stat.stat.mtime > pac_stat.stat.mtime
