@@ -32,8 +32,7 @@
 - name: Copy jar
   copy: src={{ find_jar.files[0].path }} dest={{ biopet_jar }} mode=644 remote_src=yes
 
-- name: Setting up biopet profile
-  template: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
-
 - name: Create config from template
   template: src=templates/biopet_config.yml.j2 dest={{ biopet_config }} mode=644
+  notify:
+    - Write biopet profile

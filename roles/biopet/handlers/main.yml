@@ -1,0 +1,2 @@
+- name: Write biopet profile
+  template: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
