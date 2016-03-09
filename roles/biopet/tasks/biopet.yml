@@ -9,7 +9,7 @@
 
 - name: Build biopet
   command: chdir={{ biopet_dir }}/src/biopet
-           mvn -DskipTests=true clean install
+           {{ maven_exe }} -DskipTests=true clean install
   when: biopet_checkout.before != biopet_checkout.after
 
 - name: checking biopet dir

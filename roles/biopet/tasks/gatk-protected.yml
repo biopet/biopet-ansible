@@ -8,7 +8,7 @@
   name: Checkout gatk-protected
 
 - command: chdir={{ biopet_dir }}/src/gatk-protected
-           mvn clean install
+           {{ maven_exe }} clean install
   when: gatk_checkout.before != gatk_checkout.after
   name: Build gatk-protected
 

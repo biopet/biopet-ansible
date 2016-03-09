@@ -22,5 +22,4 @@
     dest={{ biopet_dir }}/programs/maven/
   when: maven_download|changed
 
-- file: src={{ maven_dir }}/bin/mvn dest=/usr/local/bin/mvn owner=root group=root state=link
-  name: Link maven to global path
+- set_fact: maven_exe={{ maven_dir }}/bin/mvn
