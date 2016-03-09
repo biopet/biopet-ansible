@@ -1,0 +1,42 @@
+---
+
+- include: java7-oracle.yml
+- include: maven3.yml
+- include: ubuntu-packages.yml
+- include: htslib.yml
+
+# Flexiprep
+
+- include: fastqc.yml
+- include: seqtk.yml
+- include: sickle.yml
+- include: cutadapt.yml
+
+# Mapping
+
+- include: picard.yml
+- include: bwa.yml
+- include: star.yml
+- include: bowtie.yml
+- include: bowtie2.yml
+
+# BamMetrics
+
+- include: samtools.yml
+- include: bedtools.yml
+
+# Shiva
+
+- include: gatk-protected.yml
+- include: bcftools.yml
+- include: vt.yml
+- include: freebayes.yml
+- include: varscan.yml
+
+#TODO: Fix install of vep
+#- include: variant_effect_predictor.yml
+
+# Gentrap
+
+- include: htseq.yml
+- include: cufflinks.yml

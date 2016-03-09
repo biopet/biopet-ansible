@@ -2,4 +2,8 @@ export BIOPET_JAR="{{ biopet_jar }}"
 export BIOPET_CONFIG="{{ biopet_config }}"
 export PATH=$PATH:{{ biopet_dir }}/bin
 
+{% for item in biopet_profile_configs %}
+export BIOPET_CONFIG=$BIOPET_CONFIG:{{ item }}
+{% endfor %}
+
 alias biopet="java -Xmx2G -jar `readlink -f $BIOPET_JAR`"

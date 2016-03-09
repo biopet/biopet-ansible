@@ -4,7 +4,8 @@
   become_user: root
   become: true
   roles:
-  - role: biopet
+  - role: biopet-tools
   - role: references
+  - role: biopet
   vars:
     reference_dir: /usr/local/biopet/references

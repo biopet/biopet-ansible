@@ -1,46 +1,44 @@
 ---
 
-- include: java7-oracle.yml
-- include: maven3.yml
-- include: ubuntu-packages.yml
-- include: htslib.yml
+- name: Checkout biopet on {{ biopet_version }}
+  git: repo=https://git.lumc.nl/biopet/biopet.git
+       dest={{ biopet_dir }}/src/biopet
+       version={{ biopet_version }}
+       force=yes
+  register: biopet_checkout
 
-# Flexiprep
+- name: Build biopet
+  command: chdir={{ biopet_dir }}/src/biopet
+           {{ maven_exe }} -DskipTests=true clean install
+  when: biopet_checkout.before != biopet_checkout.after
 
-- include: fastqc.yml
-- include: seqtk.yml
-- include: sickle.yml
-- include: cutadapt.yml
+- name: checking biopet dir
+  file: path={{ biopet_dir }}/programs/biopet/ state=directory
 
-# Mapping
+- name: Check config dir
+  file: path={{ biopet_dir }}/config/ state=directory
+  become: true
 
-- include: picard.yml
-- include: bwa.yml
-- include: star.yml
-- include: bowtie.yml
-- include: bowtie2.yml
+- name: Check bin dir
+  file: path={{ biopet_dir }}/bin/ state=directory
 
-# BamMetrics
+- name: Finding final jar
+  find: paths={{ biopet_dir }}/src/biopet/protected/biopet-protected-package/target/ patterns="Biopet-?.?.?*.jar"
+  register: find_jar
 
-- include: samtools.yml
-- include: bedtools.yml
+- set_fact: biopet_jar={{ biopet_dir }}/programs/biopet/{{ find_jar.files[0].path|basename }}
+- set_fact: biopet_config={{ biopet_dir }}/config/biopet.{{ biopet_version }}.yml
+- set_fact: biopet_profile_configs="['{{ biopet_config }}']"
+- debug: msg={{ biopet_profile_configs }}
+- set_fact: biopet_profile_configs="{{ biopet_profile_configs }} + ['{{ biopet_config }}']"
 
-# Shiva
+- name: Copy jar
+  copy: src={{ find_jar.files[0].path }} dest={{ biopet_jar }} mode=644 remote_src=yes
 
-- include: gatk-protected.yml
-- include: bcftools.yml
-- include: vt.yml
-- include: freebayes.yml
-- include: varscan.yml
+- name: Create config from template
+  template: src=templates/biopet_config.yml.j2 dest={{ biopet_config }} mode=644
 
-#TODO: Fix install of vep
-#- include: variant_effect_predictor.yml
+- debug: msg={{ biopet_profile_configs }}
 
-# Gentrap
-
-- include: htseq.yml
-- include: cufflinks.yml
-
-# Biopet
-
-- include: biopet.yml
+- name: Write biopet profile
+  template: src=templates/biopet_profile.sh.j2 dest=/etc/profile.d/biopet.sh mode=755
