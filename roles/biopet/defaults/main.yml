@@ -1,3 +1,12 @@
 biopet_version: develop
 biopet_profile_configs: "[]"
-references: "[]"
+references:
+- species: test
+  name: test
+  url_fasta: https://barmsijs.lumc.nl/reference.fasta
+- species: test
+  name: test2
+  url_fasta: https://barmsijs.lumc.nl/reference.fasta
+- species: test2
+  name: test2
+  url_fasta: https://barmsijs.lumc.nl/reference.fasta

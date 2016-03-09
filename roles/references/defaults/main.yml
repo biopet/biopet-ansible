@@ -8,5 +8,3 @@ references:
 - species: test2
   name: test2
   url_fasta: https://barmsijs.lumc.nl/reference.fasta
-
-biopet_config: []
