@@ -1,4 +1,4 @@
-biopet_version: develop
+biopet_version: v0.6.0
 biopet_profile_configs: "[]"
 references:
 - species: test
